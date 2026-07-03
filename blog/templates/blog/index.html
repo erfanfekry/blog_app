@@ -1,0 +1,32 @@
+{% extends 'parent/base.html' %}
+{% load blog_tags %}
+{%  block title %}Index{% endblock %}
+{%  block content %}
+    <img style="display: block; margin-left: auto; margin-right: auto" src="/media/post_images/blog_home_page.png" alt="">
+
+    <h3>Blog Statistics</h3>
+    <p>Total Posts: {% total_posts %}</p>
+    <p>Total Comments: {% total_comments %}</p>
+    <p>Last Post: {% last_post_date %}</p>
+
+    {% recent_posts 3 %}
+
+    <h3>Popular Posts</h3>
+    {% popular_posts 3 as popular_posts %}
+    {% for post in popular_posts %}
+        <a href="{{post.get_absolute_url}}">{{ post.title }}</a>  {{ post.comment_count }} comments
+        <br>
+    {% endfor %}
+
+    <h3>Most and least reading times</h3>
+    {% r_time_most_least as rtime %}
+       <a href="{{rtime.0.get_absolute_url}}">{{ rtime.0.title }}</a> | Reading Time: {{ rtime.0.reading_time }} mins
+        <br>
+       <a href="{{rtime.1.get_absolute_url}}">{{ rtime.1.title }}</a> | Reading Time: {{ rtime.1.reading_time }} mins
+
+    <h3>Most and least active members</h3>
+    {% user_activeness as activeness %}
+        Most Active User: {{ activeness.0.username }} , Post Count = {{ activeness.0.post_count }}
+        <br>
+        Least Active User: {{ activeness.1.username }} , Post Count = {{ activeness.1.post_count }}
+{% endblock %}

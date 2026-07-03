@@ -1,0 +1,52 @@
+{% extends 'parent/base.html' %}
+{% load blog_tags %}
+{%  block title %}Search{% endblock %}
+{%  block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == 'success' %}
+                <ul>
+                    <li>{{ message }}</li>
+                </ul>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+    <img style="border-radius: 25%; object-fit: cover" src="{{ user.account.image_file.url }}" alt="{{ user.username }}">
+    <h2>{{ user.username }}</h2>
+    <p><b>Full Name:</b> {{ user.first_name }} {{user.last_name}}</p>
+    <p><b>Birth Date:</b> {{ user.account.date_of_birth|date }}</p>
+    <p><b>Career:</b> {{ user.account.job }}</p>
+    <p><b>Bio:</b> {{ user.account.bio|linebreaks }}</p>
+
+    <h2>Posts</h2>
+
+    <table style="width: 80%; border: 2px solid black">
+        <tr>
+            <th>Row_id</th>
+            <th>Posts</th>
+            <th>Edit</th>
+            <th>Delete</th>
+        </tr>
+    {% for post in posts %}
+        <tr>
+            <th>{{ forloop.counter }}</th>
+            <th><a href="{{post.get_absolute_url}}">{{ post.title }}</a></th>
+            <th><a href="{% url 'blog:edit_post' post.id %}">Edit</a> </th>
+            <th><a href="{% url 'blog:delete_post' post.id %}">Delete</a></th>
+        </tr>
+
+    {% endfor %}
+    </table>
+
+    <br>
+    <a style="margin-right: 10px; margin-left: 10px" href="{% url 'blog:user-edit' %}">Edit Profile</a>
+    <br>
+    <a style="margin-right: 10px; margin-left: 10px" href="{% url 'blog:password_change' %}">Change Password</a>
+    <br>
+    <a style="margin-right: 10px; margin-left: 10px" href="{% url 'blog:logout' %}">Logout</a>
+    <br>
+
+
+
+{% endblock %}

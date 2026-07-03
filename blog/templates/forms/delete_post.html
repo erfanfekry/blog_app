@@ -1,0 +1,12 @@
+{% extends 'parent/base.html' %}
+{% block title %}Create Post{% endblock %}0
+{% block content %}
+    <h2>Are you sure you want to delete "{{ post.title|truncatewords:5 }}"?</h2>
+    <form method="post">
+        {% csrf_token %}
+        <input style="margin-right: 10px" type="submit" name="action_button" value="Yes">
+        <input type="submit" name="action_button" value="No">
+    </form>
+
+
+{% endblock %}

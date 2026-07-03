@@ -1,0 +1,46 @@
+{% extends 'parent/base.html' %}
+{% block title %}Post Detail{% endblock %}
+{% load blog_tags %}
+{% block content %}
+<h1>Post Detail</h1>
+
+    {% with post.images.all as imgs %}
+
+        <h2>{{ post.title }} - By ({{ post.author }})</h2>
+        <img src="{{ imgs.0.image_file.url }}" alt="{{ imgs.0.title }}">
+        <p>{{ post.description|markdown|linebreaks}}</p>
+        {% for img in imgs|slice:"1:" %}
+            <img style="border-radius: 25%; object-fit: cover" src="{{ img.image_file.url }}" alt="{{ img.title }}">
+        {% endfor %}
+        <p>{{ post.publish|date }} {{ post.publish|time }}</p>
+        <hr>
+    {% endwith %}
+
+    {% with comments.count as cm_count %}
+        {% if cm_count > 0%}
+            {{ cm_count }} Comment{{ cm_count|pluralize }}
+        {% else %}
+            There is no comment yet!, Be the first!
+        {% endif %}
+    {% endwith %}
+
+    <br>
+    <br>
+    <br>
+    {% for comment in comments %}
+        <b>{{ comment.name }}</b>
+            <br>
+        {{ comment.body|linebreaks }}
+
+        <hr>
+    {% endfor %}
+    <div>
+        <form method="post" action="{% url "blog:post_comment" post.id %}">
+            {% csrf_token %}
+            {{ form.as_p}}
+            <br>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+
+{% endblock %}

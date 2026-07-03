@@ -1,0 +1,6 @@
+{% extends 'parent/base.html' %}
+{% block title %}Register{% endblock %}0
+{% block content %}
+    <p>Dear "{{user}}", Your account was successfully created.</p>
+    <a href="{% url "blog:login" %}">Login here</a>
+{% endblock %}

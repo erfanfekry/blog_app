@@ -1,0 +1,33 @@
+{% extends 'parent/base.html' %}
+{% block title %}{% if post %}Edit{% else %}Create{% endif %} Post{% endblock %}0
+{% block content %}
+    <h1>{% if post %}Edit{% else %}Create{% endif %} Post</h1>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="file" name="img" multiple >
+        <br><br>
+    <input type="submit" value="Submit" >
+    </form>
+    {% for img in post.images.all %}
+        <img src="{{ img.image_file.url }}" alt="{{ img.title }}">
+        <a href="{% url "blog:delete_image" img.id %}">Delete</a>
+    {% endfor %}
+
+    {% if form.errors %}
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    {{ field.label }} : {{ error }}
+                    <br>
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    {% if form.non_field_errors %}
+        {{ form.non_field_errors }}
+    {% endif %}
+
+
+{% endblock %}

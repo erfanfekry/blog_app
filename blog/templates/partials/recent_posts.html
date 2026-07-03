@@ -1,0 +1,5 @@
+<h3>Resent Posts</h3>
+{% for post in r_posts %}
+    <a href="{{ post.get_absolute_url}}">{{ post.title }}</a>
+    <br>
+{% endfor %}

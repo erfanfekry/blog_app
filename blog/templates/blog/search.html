@@ -1,0 +1,29 @@
+{% extends 'parent/base.html' %}
+{% load blog_tags %}
+{%  block title %}Search{% endblock %}
+{%  block content %}
+
+
+    {% if query %}
+        <h2>Search Results</h2>
+        {% if results.count > 0 %}
+            <p>{{ results.count }} result(s) found for '{{ query }}':</p>
+        {% endif %}
+        {% for post in results %}
+            <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            <br>
+            {% empty %}
+            <h4>No results were found for '{{ query }}'  </h4>
+        {% endfor %}
+    {% endif %}
+
+    {% if form.errors %}
+        {% for field in form %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                     {{ error }}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

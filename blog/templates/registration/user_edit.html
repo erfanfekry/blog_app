@@ -1,0 +1,11 @@
+{% extends 'parent/base.html' %}
+{% block title %}Register{% endblock %}0
+{% block content %}
+    <h2>Profile Information Edit</h2>
+    <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ user_form.as_p }}
+    {{ account_form.as_p }}
+    <input type="submit" value="Submit" >
+    </form>
+{% endblock %}

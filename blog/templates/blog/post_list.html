@@ -1,0 +1,57 @@
+{% extends 'parent/base.html' %}
+{% block title %}Post List{% endblock %}
+{% block content %}
+    {% if not user.is_authenticated %}
+        <
+    {% else %}
+        <h1>Post List</h1>
+        {% if messages %}
+            {% for message in messages %}
+                {% if message.tags == 'success' %}
+                    <ul>
+                        <li>{{ message }}</li>
+                    </ul>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+
+        <b>Categories:</b>
+        <a style="margin-left: 5px;margin-right: 5px" href="{% url 'blog:post_list_category' 'Celebrity' %}">Celebrity</a>
+        |
+        <a style="margin-left: 5px;margin-right: 5px" href="{% url 'blog:post_list_category' 'Cartoon' %}">Cartoon</a>
+        |
+        <a style="margin-left: 5px;margin-right: 5px" href="{% url 'blog:post_list_category' 'Admin' %}">Admin</a>
+        |
+        <a style="margin-left: 5px;margin-right: 5px" href="{% url 'blog:post_list_category' 'Other' %}">Other</a>
+
+
+        <br>
+        <br>
+{#        {% include 'paginator/paginator.html' with page=page_obj %}#}
+        {% if category %}
+            <h2>{{category}} Posts</h2>
+        {% else  %}
+            <h2>All Posts</h2>
+        {% endif %}
+
+        {% for post in posts %}
+            <h2>
+                <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
+            </h2>
+            <img style="border-radius: 25%; object-fit: cover" src="{{ post.images.first.image_file.url}}" alt="{{ post.images.first.title }}">
+            <p>{{ post.description|truncatewords:5 }}</p>
+            <hr>
+        {% endfor %}
+        {% if not posts.count > 0 %}
+            {% if category %}
+                <p>No posts were found for category "{{ category }}."</p>
+            {% else %}
+                <p>No posts were found!</p>
+            {% endif %}
+        {% endif %}
+
+
+    {% include 'paginator/paginator.html' with page=posts %}
+    {% endif %}
+
+{% endblock %}

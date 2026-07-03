@@ -1,0 +1,27 @@
+
+<div>
+    <form method="get" action="{% url 'blog:post_search' %}">
+        <input type="text" name="query" required placeholder="What are you looking for?">
+        <input type="submit" value="Search">
+    </form>
+    <a style="margin-right: 10px" href="{% url 'blog:post_list' %}">Posts</a>
+    {% if user.is_authenticated %}
+    |
+    <a style="margin-right: 10px; margin-left: 10px" href="{% url 'blog:create_post' %}">New Post</a>
+    |
+    <a style="margin-right: 10px; margin-left: 10px" href="{% url 'blog:profile' %}">Profile</a>
+{#    |#}
+{#    <a style="margin-right: 10px; margin-left: 10px" href="{% url 'blog:post_list' %}">Posts</a>#}
+    {% if user.is_superuser %}
+    |
+    <a style="margin-right: 10px; margin-left: 10px; text-align: right; display: inline-block" href="{% url 'admin:index' %}">Admin Panel</a>
+    {% endif %}
+    {% else %}
+    |
+    <a style="margin-right: 10px; margin-left: 10px" href="{% url 'blog:login' %}">Login</a>
+    |
+     <a style="margin-right: 10px; margin-left: 10px" href="{% url 'blog:user-register' %}">Register</a>
+    {% endif %}
+    <hr>
+
+</div>

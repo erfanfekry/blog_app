@@ -1,0 +1,16 @@
+{% extends 'parent/base.html' %}
+{% block title %}Ticket Form{% endblock %}
+{% block content %}
+
+    {% if comment %}
+        Your comment was successfully submitted!
+        <a href="{{ post.get_absolute_url }}">Return to post</a>
+    {% else %}
+        <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+            <br>
+        <input type="submit" value="Submit">
+        </form>
+    {% endif %}
+{% endblock %}
