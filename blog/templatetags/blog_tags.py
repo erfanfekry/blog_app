@@ -20,7 +20,7 @@ def total_comments():
 
 @register.simple_tag
 def last_post_date():
-    return Post.published.order_by('-publish').first().publish
+    return Post.published.order_by('-publish').first()
 
 @register.simple_tag
 def popular_posts(count):

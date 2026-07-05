@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django_resized import ResizedImageField
 
-from ErfanProject import settings
+from config import settings
 
 
 # override Manager's get_queryset method
@@ -38,7 +38,6 @@ class Post(models.Model):
     status = models.CharField(max_length=2, choices=Status.choices, default=Status.PUBLISHED)
     category = models.CharField(max_length=10, choices=Category.choices, default=Category.OTHER)
     reading_time = models.PositiveIntegerField(default=0)
-    # status = models.CharField(max_length=2, choices=choices, default=choices[0])
 
     objects = models.Manager()
     published = PublishManager()
@@ -143,5 +142,5 @@ class Account(models.Model):
                                    crop=['middle', 'center'], scale=0.5, upload_to='account_images',
                                    null=True, blank=True, verbose_name='Profile Image')
 
-    def __str__(self):  # override
+    def __str__(self):
         return self.user.username

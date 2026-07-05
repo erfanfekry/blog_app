@@ -1,14 +1,16 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
 from blog import views
+
+
 app_name = 'blog'
+
 urlpatterns = [
-    path('', views.index, name='index'), # namespace --> 'blog:home'
-    # path('posts/', views.PostListView.as_view(), name='post_list'),# namespace --> 'blog:post_list'
-    path('posts/', views.post_list, name='post_list'),# namespace --> 'blog:post_list'
-    path('posts/category/<str:category>', views.post_list, name='post_list_category'),# namespace --> 'blog:post_list'
-    path('posts/<id>', views.post_detail, name='post_detail'),# namespace --> 'blog:post_detail'
-    path('posts/<post_id>/comment', views.post_comment, name='post_comment'),# namespace --> 'blog:post_detail'
+    path('', views.index, name='index'), 
+    path('posts/', views.post_list, name='post_list'),
+    path('posts/category/<str:category>', views.post_list, name='post_list_category'),
+    path('posts/<id>', views.post_detail, name='post_detail'),
+    path('posts/<post_id>/comment', views.post_comment, name='post_comment'),
     path('ticket/', views.ticket, name='ticket'),
     path('search/', views.post_search, name='post_search'),
     path('profile/', views.profile, name='profile'),
@@ -18,7 +20,6 @@ urlpatterns = [
     path('delete-image/<int:image_id>', views.delete_image, name='delete_image'),
     path('delete-image/<int:image_id>', views.delete_image, name='delete_image'),
     path('login/', auth_views.LoginView.as_view(), name='login'),
-    # path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('logout/', views.user_logout, name='logout'),
     path('change-password/', auth_views.PasswordChangeView.as_view(success_url='done'), name='password_change'),
     path('change-password/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),

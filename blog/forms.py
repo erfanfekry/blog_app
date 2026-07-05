@@ -10,10 +10,6 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ['title', 'description', 'reading_time', 'category']
-        # widgets = {
-        #     'title' : forms.TextInput(),
-        #     'description' : forms.Textarea(),
-        # }
 
     def clean_title(self):
         title = self.cleaned_data['title']
@@ -80,14 +76,6 @@ class SearchForm(forms.Form):
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=250, required=True)
     password = forms.CharField(max_length=250, required=True, widget=forms.PasswordInput)
-
-    # def clean_username(self):
-    #     username = self.cleaned_data['username']
-    #     user = User.objects.filter(username=username)
-    #     if not len(user) > 0:
-    #         raise forms.ValidationError('Username not found.')
-    #     else:
-    #         return username
 
 class UserRegisterForm(forms.ModelForm):
     password = forms.CharField(max_length=250, widget=forms.PasswordInput, label='Password')

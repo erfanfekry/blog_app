@@ -1,8 +1,9 @@
 __pychache__/
+*.pyc
 .env
 .idea/
 .git/
 .venv/
-.venv_old/
+venv/
 media/
 *.sqlite3

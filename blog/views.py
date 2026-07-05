@@ -38,15 +38,6 @@ def post_list(request, category=None):
     }
     return render(request, 'blog/post_list.html', context)
 
-
-# class PostListView(LoginRequiredMixin, ListView):
-#     def get_queryset(self):
-#         return Post.published.exclude(author__username=self.request.user.username)
-#     context_object_name = 'posts'
-#     template_name = 'blog/post_list.html'
-#     paginate_by = 2
-#     # queryset = Post.published.all()
-
 @login_required
 def post_detail(request, id):
     post = get_object_or_404(Post, id=id, status=Post.Status.PUBLISHED)
@@ -63,10 +54,6 @@ def post_detail(request, id):
     return render(request, 'blog/post_detail.html', context)
 
 
-#
-# class PostDetailView(DetailView):
-#     model = Post
-#     template_name = 'blog/post_detail.html'
 @login_required
 def ticket(request):
     if request.method == "POST":
@@ -123,27 +110,6 @@ def post_search(request):
         form = SearchForm(data=request.GET)
         if form.is_valid():
             query = form.cleaned_data['query']
-            # search_query = SearchQuery(query)
-            # search_vector = SearchVector('title', 'description')
-            # search_vector_ranked = SearchVector('title', weight='A') +\
-            #                 SearchVector('description', weight='B') +\
-            #                 SearchVector('slug', weight='D')
-
-            # results = Post.published.filter(Q(title__icontains=query) # Q method + django field
-            #                                  & Q(description__contains=query))
-
-            # results = Post.published.filter(Q(title__search=query)
-            #                               | Q(description__search=query)) # Q method + postgrse 'search' lookup
-
-            # results = Post.published.annotate(search=SearchVector('description')).\ # SearchVector()
-            #     filter(search=query)
-
-            # results = Post.published.annotate(search=SearchVector('title', 'description')).\ # SearchQuery()
-            #     filter(search=search_query)
-
-            # results = Post.published.annotate(search=search_vector, rank=SearchRank(search_vector, search_query)) .\
-            #     filter(search=search_query).order_by('-rank') # SearchRank()
-
             results_1 = Post.published.annotate(similarity=TrigramSimilarity('title', query)) \
                 .filter(similarity__gt=0.07)
             results_2 = Post.published.annotate(similarity=TrigramSimilarity('description', query)) \
@@ -181,6 +147,7 @@ def delete_post(request, post_id):
             return redirect('blog:profile')
 
     return render(request, 'forms/delete_post.html', {'post': post})
+
 @login_required
 def edit_post(request, post_id):
     post = Post.published.get(id=post_id)
@@ -196,6 +163,7 @@ def edit_post(request, post_id):
     else:
         form = PostForm(instance=post)
     return render(request, 'forms/create_post.html', {'form': form, 'post':post})
+
 @login_required
 def delete_image(request, image_id):
     img = get_object_or_404(Image, id=image_id)
@@ -245,6 +213,7 @@ def user_register(request):
 def user_register_done(request):
         user = request.user
         return render(request, 'registration/register-done.html', {'user':user})
+
 @login_required
 def account_edit(request):
     if request.method == 'POST':
