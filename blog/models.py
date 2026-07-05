@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.utils.text import slugify
 from django_resized import ResizedImageField
 
-from config import settings
+from BlogApp import settings
 
 
 # override Manager's get_queryset method
