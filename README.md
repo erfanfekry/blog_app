@@ -32,7 +32,8 @@ The project uses PostgreSQL as the database backend and Django ORM for efficient
 
 Clone the repository:
 ```bash
-git clone <repository-url> cd <project-directory> 
+git clone https://github.com/erfanfekry/blog_app.git
+cd blog_app
 ```
 Install dependencies:
 ```bash
